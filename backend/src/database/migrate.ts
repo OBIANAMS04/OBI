@@ -13,6 +13,7 @@ async function runMigrations() {
       'migrations/002_init_mfa_devices.sql',
       'migrations/003_init_pipeline_metrics.sql',
       'migrations/004_init_exemptions.sql',
+      'migrations/005_init_cases.sql',
     ];
 
     for (const migration of migrations) {
