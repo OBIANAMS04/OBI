@@ -8,6 +8,7 @@ import dataRoutes from './routes/data';
 import exemptionsRoutes from './routes/exemptions';
 import casesRoutes from './routes/cases';
 import complianceRoutes from './routes/compliance';
+import latencyRoutes from './routes/latency';
 import { errorHandler } from './middleware/errorHandler';
 
 dotenv.config();
@@ -34,6 +35,7 @@ app.use('/data', dataRoutes);
 app.use('/exemptions', exemptionsRoutes);
 app.use('/cases', casesRoutes);
 app.use('/compliance', complianceRoutes);
+app.use('/latency', latencyRoutes);
 
 // Health check
 app.get('/health', (req, res) => {
