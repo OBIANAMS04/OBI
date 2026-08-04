@@ -3,6 +3,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import authRoutes from './routes/auth';
 import usersRoutes from './routes/users';
+import mfaRoutes from './routes/mfa';
+import dataRoutes from './routes/data';
 import { errorHandler } from './middleware/errorHandler';
 
 dotenv.config();
@@ -24,6 +26,8 @@ app.use((req, res, next) => {
 // Routes
 app.use('/auth', authRoutes);
 app.use('/users', usersRoutes);
+app.use('/mfa', mfaRoutes);
+app.use('/data', dataRoutes);
 
 // Health check
 app.get('/health', (req, res) => {

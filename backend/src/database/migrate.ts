@@ -11,6 +11,7 @@ async function runMigrations() {
     const migrations = [
       'migrations/001_init_users.sql',
       'migrations/002_init_mfa_devices.sql',
+      'migrations/003_init_pipeline_metrics.sql',
     ];
 
     for (const migration of migrations) {
