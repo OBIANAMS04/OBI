@@ -14,6 +14,7 @@ async function runMigrations() {
       'migrations/003_init_pipeline_metrics.sql',
       'migrations/004_init_exemptions.sql',
       'migrations/005_init_cases.sql',
+      'migrations/006_init_compliance.sql',
     ];
 
     for (const migration of migrations) {

@@ -7,6 +7,7 @@ import mfaRoutes from './routes/mfa';
 import dataRoutes from './routes/data';
 import exemptionsRoutes from './routes/exemptions';
 import casesRoutes from './routes/cases';
+import complianceRoutes from './routes/compliance';
 import { errorHandler } from './middleware/errorHandler';
 
 dotenv.config();
@@ -32,6 +33,7 @@ app.use('/mfa', mfaRoutes);
 app.use('/data', dataRoutes);
 app.use('/exemptions', exemptionsRoutes);
 app.use('/cases', casesRoutes);
+app.use('/compliance', complianceRoutes);
 
 // Health check
 app.get('/health', (req, res) => {
