@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 import api from '../services/api';
+import { ExemptionsDisplay } from '../components/ExemptionsDisplay';
 
 interface UserProfile {
   id: string;
@@ -176,6 +177,12 @@ export const Profile = () => {
                     Complete your profile to determine eligibility.
                   </p>
                 )}
+              </div>
+
+              {/* Exemptions Section */}
+              <div className="mt-8">
+                <h2 className="text-xl font-bold text-gray-900 mb-4">Exemption Eligibility</h2>
+                <ExemptionsDisplay userId={user?.id} token={token} />
               </div>
 
               {/* Editable Fields */}
