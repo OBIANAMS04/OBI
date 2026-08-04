@@ -9,6 +9,7 @@ import exemptionsRoutes from './routes/exemptions';
 import casesRoutes from './routes/cases';
 import complianceRoutes from './routes/compliance';
 import latencyRoutes from './routes/latency';
+import auditRoutes from './routes/audit';
 import { errorHandler } from './middleware/errorHandler';
 
 dotenv.config();
@@ -36,6 +37,7 @@ app.use('/exemptions', exemptionsRoutes);
 app.use('/cases', casesRoutes);
 app.use('/compliance', complianceRoutes);
 app.use('/latency', latencyRoutes);
+app.use('/audit', auditRoutes);
 
 // Health check
 app.get('/health', (req, res) => {

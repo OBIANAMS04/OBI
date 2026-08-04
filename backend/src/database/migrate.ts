@@ -16,6 +16,7 @@ async function runMigrations() {
       'migrations/005_init_cases.sql',
       'migrations/006_init_compliance.sql',
       'migrations/007_init_latency_metrics.sql',
+      'migrations/008_init_audit_logs.sql',
     ];
 
     for (const migration of migrations) {
