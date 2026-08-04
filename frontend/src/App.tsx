@@ -4,6 +4,7 @@ import { useAuthStore } from './store/authStore';
 import Registration from './pages/Registration';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
+import MFA from './pages/MFA';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import './App.css';
 
@@ -24,6 +25,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/mfa"
+          element={
+            <ProtectedRoute>
+              <MFA />
             </ProtectedRoute>
           }
         />

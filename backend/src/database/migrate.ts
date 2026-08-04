@@ -8,8 +8,16 @@ async function runMigrations() {
   try {
     console.log('Running migrations...');
 
-    const sql = readFileSync(resolve(__dirname, 'migrations/001_init_users.sql'), 'utf-8');
-    await client.query(sql);
+    const migrations = [
+      'migrations/001_init_users.sql',
+      'migrations/002_init_mfa_devices.sql',
+    ];
+
+    for (const migration of migrations) {
+      console.log(`Running ${migration}...`);
+      const sql = readFileSync(resolve(__dirname, migration), 'utf-8');
+      await client.query(sql);
+    }
 
     console.log('✅ Migrations completed successfully');
   } catch (error) {
