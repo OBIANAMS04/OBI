@@ -1,218 +1,108 @@
-# SSS Modernization Demo - Frontend
+# SSS Modernization Platform - Frontend
 
-React + TypeScript frontend for user registration, authentication, and exemption management.
+React 18 + Vite + Tailwind CSS frontend for the SSS Modernization Platform Release Zero (R0).
 
-## Quick Start
+## Overview
 
-### Prerequisites
-- Node.js 18+
-- npm or yarn
-
-### Setup
-
-1. Install dependencies:
-```bash
-npm install
-```
-
-2. Start development server:
-```bash
-npm start
-```
-
-App runs on `http://localhost:3000`
-
-Backend API should be running on `http://localhost:3001`
-
-## Available Scripts
-
-- `npm start` / `npm run dev` - Start development server
-- `npm test` - Run Jest tests
-- `npm run build` - Build for production
-- `npm run lint` - Run ESLint
+This is a modern, responsive frontend application built with:
+- **React 18** - UI library
+- **Vite** - Build tool and dev server
+- **React Router** - Client-side routing
+- **Axios** - HTTP client
+- **Tailwind CSS** - Utility-first CSS framework
+- **JWT Authentication** - Secure token-based auth
 
 ## Project Structure
 
 ```
-frontend/
-├── public/
-│   └── index.html
-├── src/
-│   ├── pages/
-│   │   ├── Registration.tsx      # STORY-001 registration form
-│   │   ├── Login.tsx             # Login page
-│   │   └── Profile.tsx           # User profile (STORY-002)
-│   ├── components/
-│   │   └── ProtectedRoute.tsx    # Auth guard
-│   ├── services/
-│   │   └── api.ts                # Axios API client
-│   ├── store/
-│   │   └── authStore.ts          # Zustand auth state
-│   ├── utils/
-│   │   └── validators.ts         # Form validation
-│   ├── App.tsx                   # Main component + routing
-│   ├── App.css                   # Global styles
-│   └── index.tsx                 # React entry point
-├── package.json
-├── tsconfig.json
-├── tailwind.config.js
-├── jest.config.js
-└── README.md
+src/
+├── components/
+│   ├── Auth/
+│   │   ├── Login.jsx
+│   │   ├── Register.jsx
+│   │   └── ProtectedRoute.jsx
+│   └── Dashboard/
+│       ├── Dashboard.jsx
+│       └── UserProfile.jsx
+├── services/
+│   ├── api.js
+│   └── authService.js
+├── hooks/
+│   ├── useAuth.js
+│   └── useApi.js
+├── utils/
+│   ├── tokenManager.js
+│   └── validators.js
+├── App.jsx
+├── main.jsx
+└── index.css
 ```
 
-## Pages
+## Setup & Installation
 
-### /register
-User registration form (STORY-001)
-- Email validation
-- Strong password requirements
-- SSN format (XXX-XX-XXXX)
-- Age validation (18+)
-- Real-time validation feedback
+### Prerequisites
+- Node.js v16+
+- npm v8+
 
-### /login
-User login page
-- Email + password authentication
-- Error messaging
+### Installation
 
-### /profile
-User profile page (protected route)
-- Display user information
-- Logout button
+```bash
+npm install
+cp .env.example .env.local
+npm run dev
+```
+
+## Development
+
+```bash
+npm run dev      # Start dev server
+npm run build    # Build for production
+npm run preview  # Preview production build
+```
 
 ## Features
 
-### Registration Form (STORY-001)
-- Email format validation
-- Password strength requirements (12+ chars, uppercase, digit, special)
-- SSN format validation with auto-formatting
-- Date of birth with age validation
-- Real-time field validation feedback
-- Password strength indicator
-- Error display with field-level details
-- Confirmation password matching
-- Accessible form (WCAG 2.1 AA)
-- Loading state during submission
+- User Registration & Login
+- JWT Authentication
+- Protected Dashboard
+- User Profile Management
+- Responsive Design
+- Form Validation
+- API Integration
 
-### Authentication
-- JWT token storage in localStorage
-- Auto-logout on 401 response
-- Protected routes
-- Persistent login (refresh page keeps user logged in)
+## API Configuration
 
-### State Management
-- Zustand for auth state
-- Persisted to localStorage
-- Global auth context
+Set `VITE_API_BASE_URL` in `.env.local`:
+```
+VITE_API_BASE_URL=http://localhost:3001/api
+```
 
-### Styling
-- Tailwind CSS
-- Responsive design
-- Accessible color contrast
-- Focus indicators
+## Authentication
 
-## Authentication Flow
+Login flow:
+1. Register or login
+2. JWT token stored in localStorage
+3. Token included in API requests
+4. Automatic logout on 401 response
 
-1. User fills registration form
-2. Form validates in real-time
-3. Submit calls `POST /auth/register`
-4. Backend returns user + JWT token
-5. Token stored in localStorage
-6. User redirected to `/profile`
-7. Auth state persisted (survives refresh)
+## Deployment
 
-## Form Validation
-
-### Email
-- Required
-- Valid email format
-
-### Password
-- Minimum 12 characters
-- At least 1 uppercase letter
-- At least 1 digit
-- At least 1 special character (!@#$%^&*)
-
-### Full Name
-- Required
-- At least 2 characters
-
-### SSN
-- Required
-- Format: XXX-XX-XXXX
-- Auto-formatted as user types
-
-### Date of Birth
-- Required
-- Must be at least 18 years old
-- Valid date format
-
-## Accessibility
-
-- Semantic HTML
-- Proper label associations
-- ARIA attributes (aria-invalid, aria-describedby, role="alert")
-- Keyboard navigation
-- Focus indicators
-- Color contrast 4.5:1 for text
-- Form error messages associated with fields
-
-## Testing
-
-Run tests:
 ```bash
-npm test
+npm run build
+# Deploy dist/ directory
 ```
 
-Tests cover:
-- Form renders correctly
-- Validation logic
-- Error messages display
-- SSN formatting
-- Password strength meter
-- Age validation
-- Form submission
-- Navigation to login page
+## Security
 
-## Environment Variables
+- JWT token-based authentication
+- Password validation (min 6 chars)
+- Email format validation
+- Protected routes
+- CORS-enabled API integration
 
-Create `.env.local`:
-```
-REACT_APP_API_URL=http://localhost:3001
-```
+## Browser Support
 
-## Development Tips
-
-### Adding a new page
-1. Create file in `src/pages/`
-2. Export component
-3. Add route in `App.tsx`
-4. Create tests
-
-### Adding validation
-1. Add validator function in `src/utils/validators.ts`
-2. Use in form component
-3. Add tests
-
-### Styling
-- Use Tailwind classes
-- Extend theme in `tailwind.config.js`
-- Global styles in `App.css`
-
-## Troubleshooting
-
-**API connection error:**
-- Check backend is running on port 3001
-- Check REACT_APP_API_URL in `.env.local`
-
-**Port 3000 already in use:**
-- Change port: `PORT=3001 npm start`
-- Or kill process: `lsof -ti:3000 | xargs kill -9`
-
-**Module not found:**
-- Run `npm install`
-- Clear cache: `rm -rf node_modules && npm install`
-
-**TypeScript errors:**
-- Run `npm run lint`
-- Check `tsconfig.json`
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
