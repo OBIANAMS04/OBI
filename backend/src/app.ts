@@ -19,7 +19,8 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
+  origin: process.env.CORS_ORIGIN || ['http://localhost:5173', 'http://localhost:3000'],
+  credentials: true,
 }));
 
 // Request logging
@@ -29,15 +30,15 @@ app.use((req, res, next) => {
 });
 
 // Routes
-app.use('/auth', authRoutes);
-app.use('/users', usersRoutes);
-app.use('/mfa', mfaRoutes);
-app.use('/data', dataRoutes);
-app.use('/exemptions', exemptionsRoutes);
-app.use('/cases', casesRoutes);
-app.use('/compliance', complianceRoutes);
-app.use('/latency', latencyRoutes);
-app.use('/audit', auditRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/users', usersRoutes);
+app.use('/api/mfa', mfaRoutes);
+app.use('/api/data', dataRoutes);
+app.use('/api/exemptions', exemptionsRoutes);
+app.use('/api/cases', casesRoutes);
+app.use('/api/compliance', complianceRoutes);
+app.use('/api/latency', latencyRoutes);
+app.use('/api/audit', auditRoutes);
 
 // Health check
 app.get('/health', (req, res) => {

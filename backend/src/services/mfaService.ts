@@ -1,5 +1,3 @@
-import speakeasy from 'speakeasy';
-import QRCode from 'qrcode';
 import pool from '../database/connection';
 import { AppError } from '../utils/errors';
 
@@ -14,24 +12,8 @@ export interface MFAVerifyInput {
 
 // Generate TOTP secret and QR code
 export async function generateMFASecret(userId: string, email: string): Promise<MFASetupResponse> {
-  // Generate TOTP secret
-  const secret = speakeasy.generateSecret({
-    name: `SSS Demo (${email})`,
-    issuer: 'SSS Modernization',
-    length: 32,
-  });
-
-  if (!secret.otpauth_url) {
-    throw new AppError(500, 'Failed to generate MFA secret');
-  }
-
-  // Generate QR code
-  const qrCode = await QRCode.toDataURL(secret.otpauth_url);
-
-  return {
-    secret: secret.base32,
-    qrCode,
-  };
+  // MFA disabled for Phase 4
+  throw new AppError(501, 'MFA not yet available - coming in Phase 5');
 }
 
 // Verify TOTP code and enable MFA
@@ -40,64 +22,12 @@ export async function verifyAndEnableMFA(
   secret: string,
   totpCode: string
 ): Promise<void> {
-  // Verify the TOTP code
-  const isValid = speakeasy.totp.verify({
-    secret,
-    encoding: 'base32',
-    token: totpCode,
-    window: 2, // Allow 2 time windows (±30 seconds)
-  });
-
-  if (!isValid) {
-    throw new AppError(400, 'Invalid authentication code', 'INVALID_TOTP');
-  }
-
-  const client = await pool.connect();
-
-  try {
-    await client.query('BEGIN');
-
-    // Save MFA device
-    await client.query(
-      `INSERT INTO mfa_devices (user_id, device_name, secret_key, verified)
-       VALUES ($1, $2, $3, $4)`,
-      [userId, 'Primary Device', secret, true]
-    );
-
-    // Enable MFA on user account
-    await client.query(
-      `UPDATE users SET mfa_enabled = true, updated_at = NOW() WHERE id = $1`,
-      [userId]
-    );
-
-    await client.query('COMMIT');
-  } catch (error) {
-    await client.query('ROLLBACK');
-    throw error;
-  } finally {
-    client.release();
-  }
+  throw new AppError(501, 'MFA not yet available - coming in Phase 5');
 }
 
 // Verify TOTP code during login
 export async function verifyMFACode(userId: string, totpCode: string): Promise<boolean> {
-  const result = await pool.query(
-    `SELECT secret_key FROM mfa_devices WHERE user_id = $1 AND verified = true LIMIT 1`,
-    [userId]
-  );
-
-  if (result.rows.length === 0) {
-    throw new AppError(400, 'MFA device not found');
-  }
-
-  const secret = result.rows[0].secret_key;
-
-  return speakeasy.totp.verify({
-    secret,
-    encoding: 'base32',
-    token: totpCode,
-    window: 2,
-  });
+  throw new AppError(501, 'MFA not yet available - coming in Phase 5');
 }
 
 // Check if user has MFA enabled

@@ -17,10 +17,6 @@ export function errorHandler(err: Error, req: Request, res: Response, next: Next
       },
     };
 
-    if (err.fields) {
-      response.error.fields = err.fields;
-    }
-
     return res.status(err.statusCode).json(response);
   }
 

@@ -16,8 +16,8 @@ export function generateToken(userId: string, email: string): string {
       sub: userId,
       email,
     },
-    JWT_SECRET,
-    { expiresIn: JWT_EXPIRY }
+    JWT_SECRET as string,
+    { expiresIn: JWT_EXPIRY } as any
   );
 }
 
